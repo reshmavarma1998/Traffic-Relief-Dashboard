@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Support</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #1e3a8a; /* Professional blue color */
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    header {
+      background-color: #1e3a8a; /* Same blue background for header */
+      color: white;
+      text-align: center;
+      padding: 20px 15px;
+      position: relative;
+      animation: titleAnimation 2s ease-in-out infinite alternate;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+      transition: color 0.3s ease;
+    }
+
+    header h1:hover {
+      color: #ff007f; /* Change color on hover */
+    }
+
+    /* Title Animation */
+    @keyframes titleAnimation {
+      0% {
+        transform: scale(1);
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+      }
+      100% {
+        transform: scale(1.1);
+        text-shadow: 0 0 20px rgba(255, 0, 0, 1);
+      }
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+      flex-grow: 1;
+    }
+
+    .widget {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    /* Animation for widget cards */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .widget h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #1e3a8a; /* Header blue color */
+    }
+
+    .widget select, .widget button {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      transition: background-color 0.3s ease;
+    }
+
+    .widget select:hover, .widget button:hover {
+      background-color: #ff007f; /* Neon effect */
+    }
+
+    .widget button {
+      background-color: #1e3a8a;
+      color: white;
+      cursor: pointer;
+    }
+
+    .widget button:hover {
+      background-color: #ff007f; /* Neon button hover effect */
+      box-shadow: 0 0 10px #ff007f;
+    }
+
+    footer {
+      background-color: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: relative;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .help-info {
+      margin-top: 20px;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .help-info h3 {
+      color: #ff007f;
+      font-size: 18px;
+    }
+
+    .help-info p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    header.dark-mode {
+      background-color: #1e1e1e;
+    }
+
+    button.dark-mode {
+      background-color: #555;
+    }
+
+    .notifications.dark-mode {
+      background-color: #1e1e1e;
+      color: #ffffff;
+      border-color: #333;
+    }
+
+    /* Media Queries for responsiveness */
+    @media (max-width: 768px) {
+      .widget {
+        padding: 15px;
+      }
+      header h1 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Emergency Support</h1>
+    <p>Immediate Assistance in Critical Situations</p>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Emergency Options Dropdown -->
+    <div class="widget">
+      <h2>Select Emergency Type</h2>
+      <select id="emergency-type">
+        <option value="medical">Medical Emergency</option>
+        <option value="vehicle">Vehicle Breakdown</option>
+        <option value="fire">Fire Emergency</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <!-- Nearest Help Section -->
+    <div class="widget">
+      <h2>Nearest Help</h2>
+      <div class="help-info" id="nearest-help">
+        <h3>Nearest Help Center</h3>
+        <p>Loading...</p>
+      </div>
+    </div>
+
+    <!-- Emergency Support Button -->
+    <div class="widget">
+      <h2>Need Immediate Support?</h2>
+      <button onclick="callForHelp()">Call Emergency Support</button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Emergency Support. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Emergency Support Button Action
+    function callForHelp() {
+      const emergencyType = document.getElementById("emergency-type").value;
+      alert(`You have called for a ${emergencyType} emergency! Our team will be with you shortly.`);
+    }
+
+    // Function to display nearest help based on selected emergency type
+    function loadNearestHelp() {
+      const emergencyType = document.getElementById("emergency-type").value;
+      let helpMessage = "Loading...";
+
+      if (emergencyType === "medical") {
+        helpMessage = "Nearest ambulance: City Hospital, ETA: 10 minutes.";
+      } else if (emergencyType === "vehicle") {
+        helpMessage = "Nearest repair service: AutoFix Garage, ETA: 15 minutes.";
+      } else if (emergencyType === "fire") {
+        helpMessage = "Nearest fire station: Central Fire Dept., ETA: 7 minutes.";
+      } else {
+        helpMessage = "Please describe your emergency.";
+      }
+
+      document.getElementById("nearest-help").innerHTML = `
+        <h3>Nearest Help Center</h3>
+        <p>${helpMessage}</p>
+      `;
+    }
+
+    // Event listener for dropdown change
+    document.getElementById("emergency-type").addEventListener("change", loadNearestHelp);
+
+    // Load nearest help on page load
+    loadNearestHelp();
+  </script>
+
+</body>
+</html>

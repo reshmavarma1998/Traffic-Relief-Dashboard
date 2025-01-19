@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food and Essentials Delivery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #1e3a8a; /* Professional blue background */
+      color: white;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    header h1:hover {
+      color: #e74c3c; /* Hover effect color */
+      text-shadow: 0 0 10px #e74c3c, 0 0 20px #e74c3c;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 50px auto;
+      max-width: 500px;
+    }
+
+    .form-container h2 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+
+    .form-container label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .form-container input,
+    .form-container select,
+    .form-container button,
+    .form-container textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .form-container input:focus,
+    .form-container select:focus,
+    .form-container textarea:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 8px rgba(52, 152, 219, 0.7);
+    }
+
+    .form-container button {
+      background-color: #3498db;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      box-shadow: 0 0 10px #3498db, 0 0 20px #3498db;
+      transition: all 0.3s ease;
+    }
+
+    .form-container button:hover {
+      background-color: #2980b9;
+      transform: scale(1.1);
+    }
+
+    .form-container button:active {
+      animation: neonGlow 0.8s ease-in-out infinite;
+    }
+
+    /* Neon Glow Effect */
+    @keyframes neonGlow {
+      0% {
+        box-shadow: 0 0 5px #e74c3c, 0 0 10px #e74c3c, 0 0 15px #e74c3c;
+      }
+      50% {
+        box-shadow: 0 0 15px #e74c3c, 0 0 25px #e74c3c, 0 0 35px #e74c3c;
+      }
+      100% {
+        box-shadow: 0 0 5px #e74c3c, 0 0 10px #e74c3c, 0 0 15px #e74c3c;
+      }
+    }
+
+    .order-popup,
+    .delivery-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      font-size: 18px;
+      z-index: 1000;
+    }
+
+    .order-popup.active,
+    .delivery-popup.active {
+      display: block;
+    }
+
+    .delivery-partners {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .partner {
+      background-color: #3498db;
+      padding: 20px;
+      margin: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .partner:hover {
+      transform: scale(1.1);
+      background-color: #2980b9;
+    }
+
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Food and Essentials Delivery</h1>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Order Form -->
+    <div class="form-container">
+      <h2>Order Food or Essentials</h2>
+      <form id="orderForm">
+        <label for="location">Your Location</label>
+        <input type="text" id="location" name="location" placeholder="Enter your location" required>
+
+        <label for="item">Select Item</label>
+        <select id="item" name="item" required>
+          <option value="" disabled selected>Select an item</option>
+          <option value="food">Food</option>
+          <option value="groceries">Groceries</option>
+          <option value="medicines">Medicines</option>
+        </select>
+
+        <button type="submit">Place Order</button>
+      </form>
+    </div>
+
+    <!-- Order Popup -->
+    <div id="orderPopup" class="order-popup">
+      <p>Order Placed Successfully!</p>
+      <button onclick="showDeliveryPartners()">Close</button>
+    </div>
+
+    <!-- Delivery Partner Popup -->
+    <div id="deliveryPopup" class="delivery-popup">
+      <p>Delivery Partner Selected!</p>
+      <button onclick="closeDeliveryPopup()">Close</button>
+    </div>
+
+    <!-- Delivery Partners Section -->
+    <div id="deliveryPartners" class="delivery-partners" style="display:none;">
+      <h2>Select Your Delivery Partner</h2>
+      <div class="partner" onclick="selectDeliveryPartner('John Doe')">
+        <p>John Doe</p>
+      </div>
+      <div class="partner" onclick="selectDeliveryPartner('Jane Smith')">
+        <p>Jane Smith</p>
+      </div>
+      <div class="partner" onclick="selectDeliveryPartner('Robert Brown')">
+        <p>Robert Brown</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Food and Essentials Delivery | All Rights Reserved</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    const orderForm = document.getElementById("orderForm");
+    const orderPopup = document.getElementById("orderPopup");
+    const deliveryPartners = document.getElementById("deliveryPartners");
+    const deliveryPopup = document.getElementById("deliveryPopup");
+
+    // Handle order submission
+    orderForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      // Display the order placed popup
+      orderPopup.classList.add("active");
+
+      // Reset the form
+      orderForm.reset();
+    });
+
+    // Show delivery partners after order is placed
+    function showDeliveryPartners() {
+      orderPopup.classList.remove("active");
+      deliveryPartners.style.display = 'flex';
+    }
+
+    // Select a delivery partner
+    function selectDeliveryPartner(partnerName) {
+      // Hide delivery partners and show selected partner popup
+      deliveryPartners.style.display = 'none';
+      deliveryPopup.classList.add("active");
+      console.log("Selected delivery partner:", partnerName);
+    }
+
+    // Close the delivery partner popup
+    function closeDeliveryPopup() {
+      deliveryPopup.classList.remove("active");
+    }
+  </script>
+</body>
+</html>

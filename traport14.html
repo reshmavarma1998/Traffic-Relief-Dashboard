@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transport Booking</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #003366; /* Blue background */
+      color: white;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Movable neon effect for the title */
+    header {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 50px;
+      color: #00bcd4;
+      text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4;
+      animation: moveTitle 4s ease-in-out infinite, neonGlow 1.5s ease-in-out infinite alternate;
+      cursor: pointer;
+    }
+
+    header:hover {
+      color: #ff007f;
+      text-shadow: 0 0 5px #ff007f, 0 0 10px #ff007f, 0 0 15px #ff007f;
+    }
+
+    @keyframes moveTitle {
+      0% {
+        left: -100px;
+      }
+      50% {
+        left: 50%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+
+    @keyframes neonGlow {
+      0% {
+        text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4;
+      }
+      50% {
+        text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f, 0 0 30px #ff007f;
+      }
+      100% {
+        text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 15px #00bcd4;
+      }
+    }
+
+    form {
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 50px; /* Circular border */
+      width: 60%;
+      margin: 100px auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      animation: slideIn 1s ease-out;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #00bcd4;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0097a7;
+    }
+
+    .ride-card {
+      background-color: #444;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ride-card button {
+      background-color: #009688;
+    }
+
+    #bookingDetails {
+      display: none;
+      background-color: #333;
+      padding: 20px;
+      border-radius: 50px; /* Circular border */
+      width: 60%;
+      margin: 20px auto;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    Transport Assistant
+  </header>
+
+  <form id="transportForm">
+    <label for="currentLocation">Current Location:</label>
+    <input type="text" id="currentLocation" required>
+
+    <label for="destination">Destination:</label>
+    <input type="text" id="destination" required>
+
+    <label for="transportType">Transport Type:</label>
+    <select id="transportType">
+      <option value="Car">Car</option>
+      <option value="Bike">Bike</option>
+      <option value="Bus">Bus</option>
+    </select>
+
+    <label for="budget">Your Budget (₹):</label>
+    <input type="number" id="budget" required>
+
+    <button type="submit">Find Rides</button>
+  </form>
+
+  <div id="rides"></div>
+
+  <div id="bookingDetails">
+    <h2>Booking Confirmed!</h2>
+    <p id="bookingInfo"></p>
+    <p id="fare"></p>
+    <p id="driverInfo"></p>
+    <p id="bookingTime"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById("transportForm");
+    const ridesContainer = document.getElementById("rides");
+    const bookingDetails = document.getElementById("bookingDetails");
+    const bookingInfo = document.getElementById("bookingInfo");
+    const fare = document.getElementById("fare");
+    const driverInfo = document.getElementById("driverInfo");
+    const bookingTime = document.getElementById("bookingTime");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const currentLocation = document.getElementById("currentLocation").value;
+      const destination = document.getElementById("destination").value;
+      const transportType = document.getElementById("transportType").value;
+      const budget = document.getElementById("budget").value;
+
+      // Simulate API response for available rides
+      const availableRides = [
+        { type: "Car", fare: 200, available: true },
+        { type: "Bike", fare: 50, available: true },
+        { type: "Bus", fare: 100, available: false }
+      ];
+
+      ridesContainer.innerHTML = "";
+      availableRides.forEach(ride => {
+        if (ride.fare <= budget && ride.available) {
+          const rideCard = document.createElement("div");
+          rideCard.classList.add("ride-card");
+          rideCard.innerHTML = `
+            <span>${ride.type} - ₹${ride.fare}</span>
+            <button onclick="confirmBooking('${ride.type}', ${ride.fare})">Book Now</button>
+          `;
+          ridesContainer.appendChild(rideCard);
+        }
+      });
+
+      if (ridesContainer.innerHTML === "") {
+        ridesContainer.innerHTML = "<p>No rides available within your budget.</p>";
+      }
+    });
+
+    function confirmBooking(type, fareAmount) {
+      // Simulate booking details
+      const driverName = "John Doe"; // Sample driver name
+      const bookingDate = new Date().toLocaleDateString(); // Current date
+      const bookingTimeValue = new Date().toLocaleTimeString(); // Current time
+
+      bookingDetails.style.display = "block";
+      bookingInfo.textContent = `${type} has been successfully booked!`;
+      fare.textContent = `Fare: ₹${fareAmount}`;
+      driverInfo.textContent = `Driver: ${driverName}`;
+      bookingTime.textContent = `Booking Time: ${bookingTimeValue} on ${bookingDate}`;
+    }
+  </script>
+
+</body>
+</html>
