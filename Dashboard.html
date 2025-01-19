@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traffic Relief Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+     background-color: rgb(12, 12, 52);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #34495e;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      position: sticky;
+      top: 0px;
+      z-index: 1;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+    }
+
+    nav a:hover {
+      color: #1abc9c;
+    }
+
+    #darkModeToggle {
+      padding: 10px 20px;
+      background-color: #1abc9c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.3s;
+    }
+
+    #darkModeToggle:hover {
+      transform: scale(1.1);
+    }
+
+    #map {
+      width: 100%;
+      height: 400px;
+      border: 2px solid #ddd;
+      margin-top: 20px;
+    }
+
+    /* Quick Access Section */
+    #quick-access {
+      margin: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card {
+      width: 300px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      margin-top: 20px;
+    }
+
+    .card-content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .card-content h3 {
+      margin: 0;
+      font-size: 22px;
+      color: #2c3e50;
+    }
+
+    .card-content p {
+      margin: 10px 0;
+      color: #7f8c8d;
+    }
+
+    .card-content button {
+      padding: 10px 20px;
+      background-color: #30404a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .card-content button:hover {
+      background-color: #3582b6;
+    }
+    #map-video img{
+     opacity: 0.6;
+        width: 100%;
+        height: 500px;
+    }
+    nav{
+        width: 70%;
+    }
+  input{
+      
+     
+     width: 70%;
+        padding: 10px;
+        border-radius: 25px;
+    }
+    .icon{
+        display: flex;
+    }
+    .icon >img{
+        width: 60px;
+        height: 60px;
+        margin: 20px;
+        cursor: pointer;
+    }
+
+    footer{
+        background-color: #34495e;
+        height: 100px;
+        color: white;
+        text-align: center;
+        display: flex;
+        padding: 20px;
+        align-items: center;
+        position: static;
+        bottom: 0px;
+    }
+    .logo img{
+border-radius: 150px;
+width: 55px;
+margin-left: 40px;
+    }
+    .footerSection{
+      margin-left: 50px;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <a href="Dashboard.html"><div class="logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl4AO5nc6frCV4BtivrcqB5CpCkg-2ytMApA&s" alt=""></div></a>
+    <nav>
+       
+
+            <input type="text" placeholder="Search" >
+       
+        <a href="Profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+      <a href="Signup.html"><i class="fas fa-sign-in-alt"></i> Logout</a>
+    </nav>
+    
+  </header>
+
+  <div id="map-video">
+    <img src="https://media.istockphoto.com/id/691423398/vector/winding-road-on-a-white-isolated-background-with-pin-pointers.jpg?s=612x612&w=0&k=20&c=PaRJPzxTEMgSc09prPpitCxGPMUcqMtwPSV4FxNfrGw=" alt="">
+</div>
+
+
+
+  <!-- Quick Access -->
+  <section id="quick-access">
+    <div class="card">
+      <img src="https://echovme.in/wp-content/uploads/2021/12/Digital-Marketing-Strategies-For-Online-Food-Delivery-Business.png" alt="Food Delivery">
+      <div class="card-content">
+        <h3>Food Delivery</h3>
+        <p>Order food quickly with our reliable services.</p>
+        <a href="Fooddelivery.html"><button>Explore</button></a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://img.freepik.com/free-vector/gradient-international-trade_23-2149150716.jpg" alt="Transport Assistance">
+      <div class="card-content">
+        <h3>Transport Assistance</h3>
+        <p>Get instant transport options near you.</p>
+        <a href="Transport.html"><button>Explore</button></a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://www.claysys.com/app/uploads/2022/03/AI_Chatbots.png" alt="AI Assistance">
+      <div class="card-content">
+        <h3>AI Assistance</h3>
+        <p>AI-powered solutions for your needs.</p>
+        <a href="Aiboat.html"><button>Explore</button></a>
+      </div>
+    </div>
+
+    <div class="card">
+        <img src="https://img.freepik.com/premium-vector/set-emergency-service_108061-1764.jpg">
+        <div class="card-content">
+          <h3>Emergancy Sport</h3>
+          <p>Sport quickly with our reliable services.</p>
+          <a href="Emergency.html"><button>Explore</button></a>
+        </div>
+      </div>
+  </section>
+
+  <footer> 
+    <div class="icon">
+        <img src="https://cdn-icons-png.flaticon.com/128/6422/6422202.png" alt=""><a href=""></a>
+       <img src="https://cdn-icons-png.flaticon.com/128/6422/6422688.png" alt=""> <a href=""></a>
+      <img src="https://cdn-icons-png.flaticon.com/128/6422/6422200.png" alt="">  <a href=""></a>
+       <img src="https://cdn-icons-png.flaticon.com/128/6422/6422206.png" alt="">
+        <a href=""></a>
+    </div>
+    <p>&copy; 2025 Your Company Name. All Rights Reserved.</p>
+  
+    <div class="contain-add">
+      <div class="footerSection">
+        <div><img src=""></div>
+        <p>Traficrealif455@gmail.com</p>
+        <p> Mob. -- +21 54567875 </p>
+         <p>Add. -- Maharashtra pune, purani chok purana mohalla front of old high school </p>
+         <br>
+       
+    </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+
+
+   
+  </script>
+  
+</body>
+</html>
