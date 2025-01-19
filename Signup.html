@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery Login & Signup</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb); /* Cool gradient from teal to purple */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.75);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            width: 360px;
+        }
+
+        .container h2 {
+            margin: 0 0 2rem;
+            text-align: center;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        .container label {
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .container input {
+            width: 100%;
+            padding: 0.9rem;
+            margin-bottom: 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background: #333;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .container input:focus {
+            outline: none;
+            border: 2px solid #8f94fb;
+            background: #444;
+        }
+
+        .container button {
+            width: 100%;
+            padding: 1rem;
+            background: #8f94fb;
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .container button:hover {
+            background: #6f7bb8; /* Slightly darker shade for hover */
+        }
+
+        .switch {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1rem;
+        }
+
+        .message {
+            margin-top: 1rem;
+            font-size: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 id="formTitle">Login</h2>
+        <form id="authForm">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required>
+
+            <div id="signupFields" style="display: none;">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Choose a username">
+            </div>
+
+            <a href="Dashboard.html"><button type="submit" id="submitBtn">Login</button></a>
+
+        </form>
+        <p class="switch">
+            <span id="switchText">Don't have an account? </span>
+            <a href="#" id="switchLink">Sign up here</a>
+        </p>
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        const authForm = document.getElementById('authForm');
+        const formTitle = document.getElementById('formTitle');
+        const switchText = document.getElementById('switchText');
+        const switchLink = document.getElementById('switchLink');
+        const signupFields = document.getElementById('signupFields');
+        const message = document.getElementById('message');
+        const submitBtn = document.getElementById('submitBtn');
+
+      
+
+        let isLogin = true;
+
+        switchLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLogin = !isLogin;
+
+            if (isLogin) {
+                formTitle.textContent = 'Login';
+                switchText.textContent = "Don't have an account? ";
+                switchLink.textContent = 'Sign up here';
+                submitBtn.textContent = 'Login';
+                signupFields.style.display = 'none';
+            } else {
+                formTitle.textContent = 'Sign Up';
+                switchText.textContent = 'Already have an account? ';
+                switchLink.textContent = 'Log in here';
+                submitBtn.textContent = 'Sign Up';
+                signupFields.style.display = 'block';
+            }
+        });
+
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (isLogin) {
+                const storedEmail = localStorage.getItem('email');
+                const storedPassword = localStorage.getItem('password');
+
+                if (email === storedEmail && password === storedPassword) {
+                    message.style.color = 'green';
+                    message.textContent = "Welcome back!";
+                    submitBtn.addEventListener("click",()=>{
+                        window.location.href = "Dashboard.html"
+                    })
+                } else {
+                    message.style.color = 'red';
+                    message.textContent = 'Invalid email or password. Please try again.';
+                }
+            } else {
+                const username = document.getElementById('username').value;
+
+                if (email && password && username) {
+                    localStorage.setItem('email', email);
+                    localStorage.setItem('password', password);
+                    localStorage.setItem('username', username);
+
+                    message.style.color = 'green';
+                    message.textContent = 'Account created successfully! You can now log in.';
+
+                    // Switch back to login
+                    isLogin = true;
+                    formTitle.textContent = 'Login';
+                    switchText.textContent = "Don't have an account? ";
+                    switchLink.textContent = 'Sign up here';
+                    submitBtn.textContent = 'Login';
+                    signupFields.style.display = 'none';
+                } else {
+                    message.style.color = 'red';
+                    message.textContent = 'Please fill out all fields to sign up.';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
